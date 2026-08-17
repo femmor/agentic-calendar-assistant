@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
 import express from "express"
 import cors from "cors"
+import { getPool } from "./db/pool.js"
 
 dotenv.config()
 
@@ -17,13 +18,17 @@ app.use(cors({
 }))
 
 app.get("/health", async (req, res) => {
+    await getPool().query("SELECT 1") // Ensure the database connection is established
+
     try {
         res.status(200).json({
             status: "OK",
-            service: "Agentic Calendar App"
+            service: "Agentic Calendar App",
+            database: "Connected"
         })
     } catch (error) {
-        res.status(500).json({
+        res.status(503).json({
+            status: "Service Unavailable",
             success: false,
             message: error instanceof Error ? error.message : "Internal server error"
         })
