@@ -3,6 +3,7 @@ import { AppName } from "@/app/layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
 import SignIn from "@/components/ui/auth/sign-in";
+import RedirectIfAuthenticated from "@/components/ui/auth/RedirectIfAuthenticated";
 
 export const metadata: Metadata = {
     title: `Sign In - ${AppName}`,
@@ -23,7 +24,9 @@ const SignInPage = () => {
                     </CardDescription>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-4">
-                    <SignIn />
+                    <RedirectIfAuthenticated>
+                        <SignIn />
+                    </RedirectIfAuthenticated>
                 </CardContent>
             </Card>
         </main>
